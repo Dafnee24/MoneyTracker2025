@@ -12,7 +12,7 @@ const SignIn = () => {
       <View style={styles.contentWrapper}>
         <TextInput
           label="Email Address"
-          placeholder="Type your email address"
+          placeholder="Type your email address Dafnee"
         />
         <Gap height={16} />
         <TextInput
