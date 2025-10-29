@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Image, TouchableOpacity, Text} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 
 type Props = {
@@ -32,16 +32,13 @@ const InputImage = ({onSelectImage, initialUri = null}: Props) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={handleSelectImage} activeOpacity={0.8}>
-        <View style={styles.avatarWrapper}>
-          {imageUri ? (
-            <Image source={{uri: imageUri}} style={styles.avatar} />
-          ) : (
-            <Image
-              source={require('../../../assets/placeholder_PP.png')}
-              style={styles.avatar}
-            />
-          )}
-        </View>
+        {imageUri ? (
+          <Image source={{uri: imageUri}} style={styles.avatar} />
+        ) : (
+          <View style={[styles.avatar, styles.placeholder]}>
+            <Text style={styles.placeholderText}>Add Photo</Text>
+          </View>
+        )}
       </TouchableOpacity>
     </View>
   );
@@ -54,20 +51,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 1,
   },
-  avatarWrapper: {
+  avatar: {
     width: 170,
     height: 170,
-    borderRadius: 85,
-    borderWidth: 2,
-    borderStyle: 'dashed',
+    borderRadius: 100,
+    borderWidth: 1.5,
     borderColor: '#8D92A3',
+  },
+  placeholder: {
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#F3F4F6',
   },
-  avatar: {
-    width: 160,
-    height: 160,
-    borderRadius: 80,
+  placeholderText: {
+    color: '#8D92A3',
+    fontSize: 1,
   },
-  // No placeholder styles needed when using image asset
 });
