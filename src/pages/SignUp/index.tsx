@@ -1,30 +1,18 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Header from '../../components/molecules/Header';
 import TextInput from '../../components/molecules/TextInput';
 import Button from '../../components/atoms/Button';
 import Gap from '../../components/atoms/Gap';
+import InputImage from '../../components/molecules/InputImage';
 
 const SignUp = () => {
+  const [photoUri, setPhotoUri] = useState<string | null>(null);
   return (
     <View style={styles.container}>
-      <Header label="Sign Up" />
+      <Header label="Sign Up" withBack />
       <View style={styles.contentWrapper}>
-        <TextInput label="Full Name" placeholder="Type your full name" />
-        <Gap height={16} />
-        <TextInput
-          label="Email Address"
-          placeholder="Type your email address Dafnee"
-        />
-        <Gap height={16} />
-        <TextInput
-          label="Password"
-          placeholder="Type your password"
-          secureTextEntry={true}
-        />
-        <Gap height={24} />
-        <Button label="Continue" />
-        <Gap height={12} />
+        <InputImage initialUri={photoUri} onSelectImage={setPhotoUri} />
       </View>
     </View>
   );
@@ -41,6 +29,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     flex: 1,
     paddingHorizontal: 24,
-    paddingTop: 200,
+    paddingTop: 24,
   },
 });
