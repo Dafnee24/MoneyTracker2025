@@ -20,6 +20,12 @@ const SignUp = () => {
           label="Email Address"
           placeholder="Type your email address"
         />
+        <Gap height={16} />
+        <TextInput
+          label="Password"
+          placeholder="Type your password here"
+          secureTextEntry={true}
+        />
       </View>
     </View>
   );
