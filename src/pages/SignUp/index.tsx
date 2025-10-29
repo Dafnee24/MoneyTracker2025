@@ -26,6 +26,12 @@ const SignUp = () => {
           placeholder="Type your password here"
           secureTextEntry={true}
         />
+<<<<<<< HEAD
+        <Gap height={24} />
+        <Button label="Lanjutkan" />
+        <Gap height={12} />
+=======
+>>>>>>> acc319e00e8cfca5876e1f08b2b1ec1cf31011e0
       </View>
     </View>
   );
