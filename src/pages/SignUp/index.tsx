@@ -23,7 +23,7 @@ const SignUp = () => {
           secureTextEntry={true}
         />
         <Gap height={24} />
-        <Button label="Continue" />
+        <Button label="Lanjutkan" />
         <Gap height={12} />
       </View>
     </View>
