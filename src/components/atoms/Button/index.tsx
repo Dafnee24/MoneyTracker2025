@@ -4,8 +4,8 @@ import {BackButton} from '../../../assets';
 
 const Button = ({
   label,
-  color = '#02CF8E',
-  textColor = '#020202',
+  color = '#60D978',
+  textColor = '#FFFF',
   type,
   icon,
   onPress,
@@ -32,13 +32,14 @@ export default Button;
 const styles = StyleSheet.create({
   button: color => ({
     backgroundColor: color,
-    padding: 12,
-    borderRadius: 8,
+    padding: 19,
+    borderRadius: 26,
+    height: 60,
   }),
   text: textColor => ({
     textAlign: 'center',
     fontFamily: 'Poppins-Medium',
-    fontSize: 14,
+    fontSize: 15,
     color: textColor,
   }),
 });

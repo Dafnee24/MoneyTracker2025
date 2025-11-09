@@ -4,7 +4,7 @@ import React from 'react';
 const TextInput = ({label, placeholder, ...rest}) => {
   return (
     <View>
-      <Text style={styles.label}>{label}</Text>
+      {label && <Text style={styles.label}>{label}</Text>}
       <Input placeholder={placeholder} style={styles.input} {...rest} />
     </View>
   );
@@ -13,17 +13,13 @@ const TextInput = ({label, placeholder, ...rest}) => {
 export default TextInput;
 
 const styles = StyleSheet.create({
-  label: {
-    fontFamily: 'Poppins-Regular',
-    fontSize: 16,
-    marginBottom: 10,
-  },
   input: {
-    borderColor: '#020202',
-    borderRadius: 8,
+    borderColor: '#494B4F',
+    borderRadius: 26,
     borderWidth: 1,
     fontFamily: 'Poppins-Regular',
-    fontSize: 14,
-    padding: 10,
+    fontSize: 15,
+    padding: 19,
+    height: 60,
   },
 });
