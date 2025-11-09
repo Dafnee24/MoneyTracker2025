@@ -5,7 +5,7 @@ import TextInput from '../../components/molecules/TextInput';
 import Button from '../../components/atoms/Button';
 import Gap from '../../components/atoms/Gap';
 
-const SignIn = () => {
+const SignIn = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Header label="Sign In" />
@@ -27,6 +27,7 @@ const SignIn = () => {
           label="Create New Account"
           color="#8D92A3"
           textColor="#FFFFFF"
+          onPress={() => navigation.navigate('SignUp')}
         />
       </View>
     </View>
