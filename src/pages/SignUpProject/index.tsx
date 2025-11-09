@@ -19,7 +19,7 @@ const SignIn = ({navigation}) => {
         <Gap height={29} />
         <TextInput placeholder="Masukan password" secureTextEntry={true} />
         <Gap height={29} />
-        <TextInput placeholder="Nomor Telefon" secureTextEntry={true} />
+        <TextInput placeholder="Nomor Telefon" />
         <Gap height={29} />
         <Button label="Sign Up" />
         <Gap height={29} />
