@@ -17,7 +17,10 @@ const SignIn = ({navigation}) => {
         <Gap height={29} />
         <TextInput placeholder="Masukan password" secureTextEntry={true} />
         <Gap height={29} />
-        <Button label="Sign In" />
+        <Button
+          label="Sign In"
+          onPress={() => navigation.replace('ChatScreenProject')}
+        />
         <Gap height={29} />
 
         <View style={styles.signUpContainer}>
