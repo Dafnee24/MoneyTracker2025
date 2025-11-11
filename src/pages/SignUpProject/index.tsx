@@ -1,15 +1,20 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
 import Logo from '../../assets/Logo 1.svg';
+import Header from '../../components/molecules/Header';
 import TextInput from '../../components/molecules/TextInput';
 import Button from '../../components/atoms/Button';
 import Gap from '../../components/atoms/Gap';
 
-const SignIn = ({navigation}) => {
+const SignUp = ({navigation}) => {
   return (
     <View style={styles.container}>
+      <Header
+        backButton={true}
+        onPress={() => navigation.navigate('SignInProject')}
+      />
       <View style={styles.logoContainer}>
-        <Logo width={98} height={87} />
+        <Logo width={120} height={106} />
       </View>
 
       <View style={styles.contentWrapper}>
@@ -36,7 +41,7 @@ const SignIn = ({navigation}) => {
   );
 };
 
-export default SignIn;
+export default SignUp;
 
 const styles = StyleSheet.create({
   container: {
@@ -45,8 +50,8 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: 'center',
-    marginTop: 100,
-    marginBottom: 103,
+    marginTop: 60,
+    marginBottom: 60,
   },
   contentWrapper: {
     backgroundColor: '#FFFFFF',
