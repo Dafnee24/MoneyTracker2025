@@ -14,7 +14,7 @@ const SignUp = ({navigation}) => {
         onPress={() => navigation.navigate('SignInProject')}
       />
       <View style={styles.logoContainer}>
-        <Logo width={120} height={106} />
+        <Logo width={98} height={87} />
       </View>
 
       <View style={styles.contentWrapper}>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: 'center',
-    marginTop: 60,
+    marginTop: 10,
     marginBottom: 60,
   },
   contentWrapper: {
