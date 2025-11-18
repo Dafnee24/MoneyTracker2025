@@ -26,7 +26,10 @@ const SignUp = ({navigation}) => {
         <Gap height={29} />
         <TextInput placeholder="Nomor Telefon" />
         <Gap height={29} />
-        <Button label="Sign Up" />
+        <Button
+          label="Sign Up"
+          onPress={() => navigation.navigate('OtpScreenProject')}
+        />
         <Gap height={29} />
 
         <View style={styles.signUpContainer}>

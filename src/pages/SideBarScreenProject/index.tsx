@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -7,6 +7,9 @@ import {
   ScrollView,
   TextInput,
   Image,
+  Pressable,
+  Animated,
+  Dimensions,
 } from 'react-native';
 import {IconObrolan, IconSearch, MenuHamburger, NullPhoto} from '../../assets';
 import {useChat} from '../../context/ChatContext';
@@ -23,6 +26,8 @@ type ChatItem = {id: string; title: string; preview: string};
 const SideBarScreenProject = ({navigation}) => {
   const [query, setQuery] = useState('');
   const {conversations, setActive, createConversation} = useChat();
+  const drawerWidth = Dimensions.get('window').width * 0.7;
+  const slideAnim = useRef(new Animated.Value(-drawerWidth)).current;
 
   const items: ChatItem[] = useMemo(
     () =>
@@ -59,68 +64,137 @@ const SideBarScreenProject = ({navigation}) => {
     navigation.navigate('ChatScreenProject');
   };
 
+  useEffect(() => {
+    Animated.timing(slideAnim, {
+      toValue: 0,
+      duration: 250,
+      useNativeDriver: true,
+    }).start();
+  }, [slideAnim]);
+
+  const closeSidebar = () => {
+    Animated.timing(slideAnim, {
+      toValue: -drawerWidth,
+      duration: 220,
+      useNativeDriver: true,
+    }).start(({finished}) => {
+      if (finished) {
+        navigation.goBack();
+      }
+    });
+  };
+
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <View style={styles.headerRow}>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => navigation.goBack()}>
-          <MenuHamburger width={22} height={22} />
-        </TouchableOpacity>
-      </View>
+    <View style={styles.screen}>
+      <Pressable style={styles.overlay} onPress={closeSidebar} />
+      <Animated.View
+        style={[
+          styles.sidebarWrapper,
+          {transform: [{translateX: slideAnim}], width: '70%'},
+        ]}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.content}
+          showsVerticalScrollIndicator={false}>
+          <View style={styles.headerRow}>
+            <TouchableOpacity activeOpacity={0.7} onPress={closeSidebar}>
+              <MenuHamburger width={22} height={22} />
+            </TouchableOpacity>
+          </View>
 
-      <View style={styles.menuSection}>
-        <Item label="Obrolan" onPress={() => {}} />
-        <Item label="Obrolan Baru" onPress={handleNewChat} />
-        <Item label="Ai Insight" onPress={() => {}} />
-      </View>
+          <View style={styles.menuSection}>
+            <Item label="Obrolan" onPress={() => {}} />
+            <Item label="Obrolan Baru" onPress={handleNewChat} />
+            <Item
+              label="Ai Insight"
+              onPress={() => navigation.navigate('InsightScreenProject')}
+            />
+          </View>
 
-      <View style={styles.searchRow}>
-        <View style={styles.searchField}>
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Cari obrolan"
-            placeholderTextColor="#6E6E6E"
-            value={query}
-            onChangeText={setQuery}
-            returnKeyType="search"
-            onSubmitEditing={() => {}}
-          />
-        </View>
-        <IconSearch width={18} height={18} />
-      </View>
+          <View style={styles.searchRow}>
+            <View style={styles.searchField}>
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Cari obrolan"
+                placeholderTextColor="#6E6E6E"
+                value={query}
+                onChangeText={setQuery}
+                returnKeyType="search"
+                onSubmitEditing={() => {}}
+              />
+            </View>
+            <IconSearch width={18} height={18} />
+          </View>
 
-      <View style={styles.separator} />
+          <View style={styles.separator} />
 
-      <Text style={styles.sectionTitle}>Obrolan</Text>
-      {filtered.map(it => (
-        <TouchableOpacity
-          key={it.id}
-          style={styles.chatCard}
-          onPress={() => goChat(it.id)}>
-          <Text style={styles.chatTitle}>{it.title}</Text>
-          <Text style={styles.chatPreview}>{it.preview}</Text>
-        </TouchableOpacity>
-      ))}
+          <Text style={styles.sectionTitle}>Obrolan</Text>
+          {filtered.map(it => (
+            <TouchableOpacity
+              key={it.id}
+              style={styles.chatCard}
+              onPress={() => goChat(it.id)}>
+              <Text style={styles.chatTitle}>{it.title}</Text>
+              <Text style={styles.chatPreview}>{it.preview}</Text>
+            </TouchableOpacity>
+          ))}
 
-      <View style={styles.footerSpacer} />
+          <View style={styles.footerSpacer} />
 
-      <View style={styles.profileRow}>
-        <Image source={NullPhoto} style={styles.avatar} />
-        <View>
-          <Text style={styles.profileName}>Dafnee pangaila</Text>
-          <Text style={styles.profileSub}>Belum masuk akun</Text>
-        </View>
-      </View>
-    </ScrollView>
+          <TouchableOpacity
+            style={styles.profileRow}
+            activeOpacity={0.7}
+            onPress={() => navigation.navigate('ProfileScreenProject')}>
+            <Image source={NullPhoto} style={styles.avatar} />
+            <View>
+              <Text style={styles.profileName}>Dafnee pangaila</Text>
+              <Text style={styles.profileSub}>Belum masuk akun</Text>
+            </View>
+          </TouchableOpacity>
+        </ScrollView>
+      </Animated.View>
+    </View>
   );
 };
 
 export default SideBarScreenProject;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: '#F2FFF4'},
-  content: {padding: 16, paddingBottom: 24, flexGrow: 1},
+  screen: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: 'transparent',
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.25)',
+    zIndex: 1,
+  },
+  sidebarWrapper: {
+    width: '70%',
+    backgroundColor: '#F2FFF4',
+    marginTop: '0%',
+    marginBottom: '14%',
+    marginRight: '20%',
+    flex: 1,
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
+    paddingHorizontal: 16,
+    paddingTop: 12,
+    paddingBottom: 20,
+    zIndex: 2,
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+  },
+  container: {flex: 1},
+  content: {paddingBottom: 24, flexGrow: 1},
   headerRow: {flexDirection: 'row', alignItems: 'center', marginBottom: 16},
   menuSection: {gap: 14, marginBottom: 20},
   item: {flexDirection: 'row', alignItems: 'center', gap: 10},

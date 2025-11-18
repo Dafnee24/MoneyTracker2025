@@ -1,13 +1,21 @@
 import React from 'react';
-import {StyleSheet, Text, View, Linking} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Linking,
+  StyleProp,
+  TextStyle,
+} from 'react-native';
 
 type Props = {
   children: string;
+  textStyle?: StyleProp<TextStyle>;
 };
 
 // Lightweight Markdown renderer for RN: headings, lists (ul/ol), blockquotes,
 // code blocks, inline code, bold/italic, links.
-const MarkdownText: React.FC<Props> = ({children}) => {
+const MarkdownText: React.FC<Props> = ({children, textStyle}) => {
   const lines = (children || '').split(/\r?\n/);
   const out: React.ReactNode[] = [];
   let inCode = false;
@@ -47,7 +55,9 @@ const MarkdownText: React.FC<Props> = ({children}) => {
       const level = h[1].length;
       const text = h[2];
       out.push(
-        <Text key={`h-${i}`} style={[styles.p, styles[`h${level}` as const]]}>
+        <Text
+          key={`h-${i}`}
+          style={[styles.p, styles[`h${level}` as const], textStyle]}>
           {renderInline(text)}
         </Text>,
       );
@@ -59,7 +69,7 @@ const MarkdownText: React.FC<Props> = ({children}) => {
     if (bq) {
       out.push(
         <View key={`bq-${i}`} style={styles.blockQuote}>
-          <Text style={styles.p}>{renderInline(bq[1])}</Text>
+          <Text style={[styles.p, textStyle]}>{renderInline(bq[1])}</Text>
         </View>,
       );
       return;
@@ -71,7 +81,7 @@ const MarkdownText: React.FC<Props> = ({children}) => {
       out.push(
         <View key={`li-${i}`} style={styles.liRow}>
           <View style={styles.liDot} />
-          <Text style={styles.p}>{renderInline(li[1])}</Text>
+          <Text style={[styles.p, textStyle]}>{renderInline(li[1])}</Text>
         </View>,
       );
       return;
@@ -82,8 +92,10 @@ const MarkdownText: React.FC<Props> = ({children}) => {
     if (oli) {
       out.push(
         <View key={`oli-${i}`} style={styles.liRow}>
-          <Text style={[styles.p, styles.olIndex]}>{oli[1]}.</Text>
-          <Text style={styles.p}>{renderInline(oli[2])}</Text>
+          <Text style={[styles.p, styles.olIndex, textStyle]}>
+            {oli[1]}.
+          </Text>
+          <Text style={[styles.p, textStyle]}>{renderInline(oli[2])}</Text>
         </View>,
       );
       return;
@@ -91,7 +103,7 @@ const MarkdownText: React.FC<Props> = ({children}) => {
 
     // paragraph / blank
     out.push(
-      <Text key={`p-${i}`} style={styles.p}>
+      <Text key={`p-${i}`} style={[styles.p, textStyle]}>
         {renderInline(line)}
       </Text>,
     );
